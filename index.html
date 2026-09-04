@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Scheda Danila</title>
+<meta name="description" content="Scheda di allenamento A/B, settembre 2026 — otto settimane, spunta serie e registro carichi.">
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#F1F3F5" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0E1015" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Scheda">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;700;800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F1F3F5;
+  --surface:#FFFFFF;
+  --surface-2:#E7EAEE;
+  --ink:#15181D;
+  --ink-2:#59606C;
+  --ink-3:#8A919C;
+  --line:#D7DBE1;
+  --line-strong:#BFC5CE;
+  --accent:#DB4F26;
+  --accent-ink:#FFFFFF;
+  --accent-soft:#FBE9E2;
+  --done:#25795A;
+  --shadow:0 1px 2px rgba(21,24,29,.06), 0 6px 20px -12px rgba(21,24,29,.28);
+  --r:12px;
+  color-scheme:light dark;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ground:#0E1015;
+    --surface:#181B21;
+    --surface-2:#232830;
+    --ink:#ECEEF2;
+    --ink-2:#9AA2AF;
+    --ink-3:#6E7684;
+    --line:#2A2F38;
+    --line-strong:#3A4149;
+    --accent:#FF7247;
+    --accent-ink:#1A0B05;
+    --accent-soft:#2E1A12;
+    --done:#4FC492;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.8);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#0E1015;
+  --surface:#181B21;
+  --surface-2:#232830;
+  --ink:#ECEEF2;
+  --ink-2:#9AA2AF;
+  --ink-3:#6E7684;
+  --line:#2A2F38;
+  --line-strong:#3A4149;
+  --accent:#FF7247;
+  --accent-ink:#1A0B05;
+  --accent-soft:#2E1A12;
+  --done:#4FC492;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -14px rgba(0,0,0,.8);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0}
+img{max-width:100%}
+[hidden]{display:none !important}
+body{
+  background:var(--ground);
+  color:var(--ink);
+  font-family:"Public Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  font-size:15px;
+  line-height:1.5;
+  -webkit-text-size-adjust:100%;
+  -webkit-tap-highlight-color:transparent;
+  padding-bottom:env(safe-area-inset-bottom);
+}
+.wrap{max-width:600px;margin:0 auto;padding:0 14px 90px}
+
+.top{
+  position:sticky;top:0;z-index:20;
+  background:var(--ground);
+  border-bottom:1px solid var(--line);
+  margin:0 -14px;
+  padding:calc(14px + env(safe-area-inset-top)) 14px 0;
+}
+.brand{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:12px}
+.brand h1{
+  font-family:"Archivo",system-ui,sans-serif;
+  font-weight:800;font-size:19px;letter-spacing:-.02em;margin:0;text-wrap:balance;
+}
+.brand .sub{
+  font-family:"IBM Plex Mono",ui-monospace,monospace;
+  font-size:11px;color:var(--ink-3);letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;
+}
+.segment{display:flex;gap:6px;margin-bottom:10px}
+.segment button{
+  flex:1;
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:14px;
+  padding:9px 10px;border-radius:9px;border:1px solid var(--line-strong);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+}
+.segment button[aria-pressed="true"]{background:var(--ink);color:var(--ground);border-color:var(--ink)}
+
+.weeks{display:flex;gap:6px;overflow-x:auto;padding-bottom:12px;scrollbar-width:none}
+.weeks::-webkit-scrollbar{display:none}
+.weeks button{
+  flex:0 0 auto;width:38px;height:38px;border-radius:50%;
+  border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);
+  font-family:"IBM Plex Mono",monospace;font-weight:600;font-size:14px;cursor:pointer;
+  font-variant-numeric:tabular-nums;
+}
+.weeks button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+
+.status{display:flex;align-items:center;gap:10px;padding:12px 0 14px}
+.bar{flex:1;height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--done);width:0;transition:width .25s ease}
+.status .count{
+  font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-2);
+  font-variant-numeric:tabular-nums;white-space:nowrap;
+}
+.status .reset{
+  border:none;background:none;color:var(--ink-3);font-size:12px;text-decoration:underline;
+  text-underline-offset:3px;cursor:pointer;padding:4px;font-family:inherit;
+}
+
+.ex{
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);margin-bottom:12px;overflow:hidden;
+}
+.ex-head{padding:13px 14px 11px;display:flex;flex-direction:column;gap:7px}
+.dist{
+  display:flex;align-items:center;gap:7px;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--ink-3);
+}
+.dist b{
+  display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 5px;
+  background:var(--surface-2);color:var(--ink-2);border-radius:5px;
+  font-weight:600;font-size:11px;letter-spacing:.02em;
+}
+.ex h2{
+  margin:0;font-family:"Archivo",sans-serif;font-weight:700;font-size:17px;
+  letter-spacing:-.015em;line-height:1.22;text-wrap:balance;
+}
+.specs{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.spec{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--ink-2);
+  background:var(--surface-2);padding:3px 7px;border-radius:6px;white-space:nowrap;
+}
+.spec.up{background:var(--accent-soft);color:var(--accent);font-weight:600}
+
+.sets{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.set{
+  display:grid;grid-template-columns:22px 1fr auto 44px;align-items:center;gap:9px;
+  padding:9px 14px;border-bottom:1px solid var(--line);
+}
+.set:last-child{border-bottom:none}
+.set .n{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.set .reps{
+  font-family:"Archivo",sans-serif;font-weight:700;font-size:16px;
+  font-variant-numeric:tabular-nums;letter-spacing:-.01em;
+}
+.set .reps span{
+  font-family:"Public Sans",sans-serif;font-weight:400;font-size:11.5px;
+  color:var(--ink-3);margin-left:3px;letter-spacing:.04em;
+}
+.kg{position:relative;display:flex;align-items:center}
+.kg input{
+  width:78px;padding:7px 26px 7px 9px;
+  border:1px solid var(--line-strong);border-radius:8px;
+  background:var(--ground);color:var(--ink);
+  font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:600;
+  text-align:right;font-variant-numeric:tabular-nums;
+}
+.kg input::placeholder{color:var(--ink-3);font-weight:500}
+.kg input:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+.kg em{
+  position:absolute;right:9px;font-style:normal;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-3);pointer-events:none;
+}
+.tick{
+  width:40px;height:40px;border-radius:11px;cursor:pointer;padding:0;
+  border:1px solid var(--line-strong);background:var(--ground);
+  display:grid;place-items:center;
+}
+.tick svg{width:19px;height:19px;stroke:var(--ink-3);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.tick[aria-pressed="true"]{background:var(--done);border-color:var(--done)}
+.tick[aria-pressed="true"] svg{stroke:var(--surface)}
+.tick:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.set.done .reps,.set.done .n{color:var(--ink-3)}
+
+.more{
+  width:100%;text-align:left;background:var(--surface-2);border:none;border-top:1px solid var(--line);
+  padding:9px 14px;color:var(--ink-2);cursor:pointer;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.more:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.body{padding:0 14px;background:var(--surface-2)}
+.body dl{margin:0;padding:2px 0 13px}
+.body dt{
+  font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-3);margin-top:9px;
+}
+.body dd{margin:2px 0 0;font-size:13.5px;color:var(--ink-2);line-height:1.5}
+
+.coach{
+  margin-top:22px;padding:16px 15px;border-radius:var(--r);
+  border:1px solid var(--line);border-left:3px solid var(--accent);background:var(--surface);
+}
+.coach h3{
+  margin:0 0 10px;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--accent);font-weight:600;
+}
+.coach ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:9px}
+.coach li{font-size:13.5px;color:var(--ink-2);line-height:1.5}
+.legend{
+  margin-top:16px;font-family:"IBM Plex Mono",monospace;font-size:10.5px;
+  color:var(--ink-3);line-height:1.9;letter-spacing:.03em;
+}
+
+.tools{margin-top:16px;display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.tools button,.tools label{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+  padding:8px 12px;border-radius:8px;border:1px solid var(--line-strong);
+  background:var(--surface);color:var(--ink-2);cursor:pointer;
+}
+.tools input[type=file]{display:none}
+.tools .hint{
+  flex-basis:100%;font-family:"Public Sans",sans-serif;font-size:12px;
+  color:var(--ink-3);text-transform:none;letter-spacing:0;border:none;padding:0;background:none;
+}
+#install{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+.saved{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:calc(18px + env(safe-area-inset-bottom));z-index:30;
+  background:var(--ink);color:var(--ground);padding:7px 14px;border-radius:99px;
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.06em;
+  opacity:0;transition:opacity .2s ease;pointer-events:none;
+}
+.saved.on{opacity:1}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;animation:none !important}}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="top">
+    <div class="brand">
+      <h1>Scheda Danila</h1>
+      <div class="sub">Settembre 2026</div>
+    </div>
+    <div class="segment" id="segment" role="group" aria-label="Scheda">
+      <button type="button" data-s="A" aria-pressed="true">Scheda A · Gambe</button>
+      <button type="button" data-s="B" aria-pressed="false">Scheda B · Upper</button>
+    </div>
+    <div class="weeks" id="weeks" role="group" aria-label="Settimana"></div>
+  </div>
+
+  <div class="status">
+    <div class="bar"><i id="barfill"></i></div>
+    <div class="count" id="count">0/0 serie</div>
+    <button class="reset" id="reset" type="button">Azzera</button>
+  </div>
+
+  <div id="list"></div>
+
+  <section class="coach">
+    <h3>Dal coach</h3>
+    <ul>
+      <li>I movimenti devono essere controllati in fase eccentrica: non lanciare i pesi — prima la contrazione muscolare, poi il resto. Non guardare il S.O.M. per il momento.</li>
+      <li>Dove c'è un rep range (es. 8‑10): ogni volta che riesci a stare dentro il range su tutte le serie, la volta dopo alzi il carico almeno sulla prima serie.</li>
+      <li>Devi arrivare alla fine delle ultime ripetizioni comunque affaticata. Se non hai bisogno della pausa o potresti farne di più, il carico è basso.</li>
+    </ul>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <div class="tools">
+    <button type="button" id="install" hidden>Installa l'app</button>
+    <button type="button" id="export">Esporta backup</button>
+    <label for="importfile" tabindex="0" role="button">Ripristina backup</label>
+    <input type="file" id="importfile" accept="application/json,.json">
+    <p class="hint">I dati restano su questo telefono. Esporta ogni tanto un backup se non vuoi rischiare di perderli.</p>
+  </div>
+</div>
+
+<div class="saved" id="saved">salvato</div>
+
+<script>
+const SCHEDE = {
+  A: [
+    { n:"Split squat", d:"G", rest:"2′", som:"3;1;1;1",
+      note:"La gamba dietro stabilizza. Fai partire bene la spinta da avampiede e alluce della gamba avanti.",
+      setup:"Peso sbilanciato sulla gamba avanti: carica bene su tutto il piede e quando sali immagina di strizzare il gluteo della gamba anteriore.",
+      w:[ [[3,"10"]], [[3,"8"]], [[3,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ],
+      up:[0,1,1,0,0,0,0,0] },
+    { n:"Hip thrust", d:"G", rest:"1′30″", som:"3;1;1;1",
+      note:"La parte interessante è la contrazione, con un piccolo stop in alto. Prima di partire carica forte con il gluteo.",
+      setup:"Schiena neutra in salita e in discesa, spingi bene sul tallone. Il busto si verticalizza in discesa e torna orizzontale quando sali.",
+      w:[ [[1,"10"],[1,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]],
+          [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]] ] },
+    { n:"Stacco rumeno", d:"F", rest:"1′30″",
+      note:"Al contrario dell'hip thrust il focus è sulla parte di allungamento: percepisci bene l'allungamento dietro la coscia.",
+      setup:"Porta il sedere alto e dietro con leggero piegamento sul ginocchio, poi estendi l'anca in risalita.",
+      w:[ [[3,"8"]], [[3,"8"]], [[3,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ],
+      up:[0,0,1,0,0,0,0,0] },
+    { n:"Leg extension", d:"Q", rest:"1′30″", som:"3;1;1;0",
+      note:"Pieno range articolare, focus sull'estensione del ginocchio.",
+      w:[ [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]] ] },
+    { n:"Abductus singola", d:"G", rest:"1′", som:"3;1;1;1",
+      note:"Seduta sulla macchina con il corpo ruotato dal lato della gamba che lavora.",
+      setup:"L'altro piede appoggia sul rinforzo centrale.",
+      w:[ [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]] ] }
+  ],
+  B: [
+    { n:"Trazioni alla sbarra supine", d:"D", rest:"2′", som:"3;1;1;1",
+      note:"Pensa sempre ad abbassare le spalle e poi schiacciare i gomiti verso il pavimento.",
+      setup:"Petto alto, non muovere le gambe in salita.",
+      w:[ [[1,"3"],[3,"2"]], [[2,"3"],[3,"2"]], [[3,"3"],[2,"2"]], [[3,"3"],[2,"2"]],
+          [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]] ] },
+    { n:"Pike push up", d:"S", rest:"1′30″", som:"3;1;1;1",
+      note:"Box da 50 cm, cubo yoga messo piatto da toccare con la fronte.",
+      setup:"Immagina sempre di spingere il sedere lontano dal box e il torace verso il box, per essere il più verticale possibile. Ogni rep torna con il torace indietro, in discesa avanza con il corpo.",
+      w:[ [[3,"6"]], [[3,"6"]], [[3,"7"]], [[3,"7"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]] ] },
+    { n:"Trazioni orizzontali gomito alto", d:"D", rest:"1′30″", som:"3;1;2;1",
+      note:"Trazioni agli anelli: immagina sempre di portare gli anelli distanti tra loro, piedi in linea con gli anelli.",
+      setup:"Tira con il gomito che va alto e verso fuori, tenendo sempre spalle basse e collo rilassato.",
+      w:[ [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]] ] },
+    { n:"Dip", d:"P", rest:"1′30″", som:"3;1;1;0",
+      note:"Prima di partire spingi le spalle più in basso possibile, poi piega portando il busto in avanti.",
+      setup:"Scendi bella profonda senza perdere l'assetto scapolare e la linea polso‑gomito.",
+      w:[ [[3,"5"]], [[1,"6"],[3,"5"]], [[2,"6"],[2,"5"]], [[3,"6"],[2,"5"]],
+          [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]] ] },
+    { n:"Dragon flag con step sotto le scapole", d:"A", rest:"1′30″",
+      note:"One leg: sali, poi porta il ginocchio al petto.",
+      setup:"Scendi il più possibile, immagina sempre di portare giù il piede e non il sedere (anca stesa).",
+      w:[ [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[3,"15\""]] ] },
+    { n:"Mobilità torace / bacino", d:"MO", rest:"1′",
+      note:"Lavora con un cuscino per l'addome sotto la pancia.",
+      setup:"Prima piccola retroversione del bacino, poi cammina con le mani per allungarti, poi prova a portare le braccia verso il soffitto tenendo la posizione.",
+      w:[ [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]] ] }
+  ]
+};
+const DIST = { G:"Glutei", F:"Femorali", Q:"Quadricipiti", D:"Dorso", S:"Spalle", P:"Petto", A:"Addome", MO:"Mobilità" };
+
+let scheda = "A", week = 1;
+let state = { kg:{}, done:{} };
+const LS = "scheda-danila-2026-09";
+const VIEW = "scheda-danila-view";
+
+function load(){
+  try{
+    const r = localStorage.getItem(LS);
+    if(r){ const d = JSON.parse(r); state = { kg:d.kg||{}, done:d.done||{} }; }
+    const v = localStorage.getItem(VIEW);
+    if(v){ const d = JSON.parse(v); if(SCHEDE[d.s]) scheda = d.s; if(d.w >= 1 && d.w <= 8) week = d.w; }
+  }catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(LS, JSON.stringify(state)); toast("salvato"); }
+  catch(e){ toast("spazio esaurito"); }
+}
+function saveView(){
+  try{ localStorage.setItem(VIEW, JSON.stringify({ s:scheda, w:week })); }catch(e){}
+}
+let toastTimer = null;
+function toast(msg){
+  const el = document.getElementById("saved");
+  el.textContent = msg;
+  el.classList.add("on");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove("on"), 1100);
+}
+
+const key = (ex, set) => scheda + "|" + ex + "|w" + week + "|s" + set;
+function lastKg(ex, set){
+  for(let w = week - 1; w >= 1; w--){
+    const v = state.kg[scheda + "|" + ex + "|w" + w + "|s" + set];
+    if(v) return v;
+  }
+  for(let w = week - 1; w >= 1; w--){
+    for(let s = 0; s < 8; s++){
+      const v = state.kg[scheda + "|" + ex + "|w" + w + "|s" + s];
+      if(v) return v;
+    }
+  }
+  return "";
+}
+function flat(ex){
+  const out = [];
+  (ex.w[week - 1] || []).forEach(b => { for(let i = 0; i < b[0]; i++) out.push(b[1]); });
+  return out;
+}
+
+const list = document.getElementById("list");
+
+function render(){
+  const open = new Set([...list.querySelectorAll(".body:not([hidden])")].map(b => b.dataset.ex));
+  list.innerHTML = "";
+
+  SCHEDE[scheda].forEach((ex, i) => {
+    const card = document.createElement("article");
+    card.className = "ex";
+
+    const specs = ['<span class="spec">rec ' + ex.rest + '</span>'];
+    if(ex.som) specs.push('<span class="spec">som ' + ex.som + '</span>');
+    if(ex.up && ex.up[week - 1]) specs.push('<span class="spec up">↑ alza carico</span>');
+
+    card.innerHTML =
+      '<div class="ex-head">' +
+        '<div class="dist"><b>' + ex.d + '</b>' + DIST[ex.d] + '</div>' +
+        '<h2>' + ex.n + '</h2>' +
+        '<div class="specs">' + specs.join("") + '</div>' +
+      '</div>' +
+      '<ol class="sets"></ol>' +
+      '<button class="more" type="button" aria-expanded="false">Note &amp; set up <span aria-hidden="true">＋</span></button>' +
+      '<div class="body" data-ex="' + i + '" hidden><dl>' +
+        (ex.note ? '<dt>Esecuzione</dt><dd>' + ex.note + '</dd>' : '') +
+        (ex.setup ? '<dt>Set up</dt><dd>' + ex.setup + '</dd>' : '') +
+      '</dl></div>';
+
+    const ol = card.querySelector(".sets");
+    flat(ex).forEach((r, s) => {
+      const k = key(i, s);
+      const isDone = !!state.done[k];
+      const isTime = r.indexOf('"') > -1;
+      const li = document.createElement("li");
+      li.className = "set" + (isDone ? " done" : "");
+      li.innerHTML =
+        '<span class="n">' + (s + 1) + '</span>' +
+        '<span class="reps">' + r + '<span>' + (isTime ? "hold" : "reps") + '</span></span>' +
+        '<label class="kg"><input type="text" inputmode="decimal" aria-label="Carico serie ' + (s + 1) + '"' +
+          ' value="' + (state.kg[k] || "") + '" placeholder="' + (lastKg(i, s) || "—") + '"><em>kg</em></label>' +
+        '<button class="tick" type="button" aria-pressed="' + isDone + '" aria-label="Serie ' + (s + 1) + ' completata">' +
+          '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5.5 5.5L20 6.5"/></svg></button>';
+
+      li.querySelector("input").addEventListener("input", e => {
+        const v = e.target.value.trim();
+        if(v) state.kg[k] = v; else delete state.kg[k];
+        save();
+      });
+      li.querySelector(".tick").addEventListener("click", e => {
+        const now = !state.done[k];
+        if(now) state.done[k] = 1; else delete state.done[k];
+        e.currentTarget.setAttribute("aria-pressed", String(now));
+        li.classList.toggle("done", now);
+        save();
+        tally();
+      });
+      ol.appendChild(li);
+    });
+
+    const btn = card.querySelector(".more");
+    const body = card.querySelector(".body");
+    if(open.has(String(i))){
+      body.hidden = false;
+      btn.setAttribute("aria-expanded", "true");
+      btn.querySelector("span").textContent = "－";
+    }
+    btn.addEventListener("click", () => {
+      const willOpen = body.hidden;
+      body.hidden = !willOpen;
+      btn.setAttribute("aria-expanded", String(willOpen));
+      btn.querySelector("span").textContent = willOpen ? "－" : "＋";
+    });
+
+    list.appendChild(card);
+  });
+
+  tally();
+}
+
+function tally(){
+  let total = 0, done = 0;
+  SCHEDE[scheda].forEach((ex, i) => {
+    flat(ex).forEach((r, s) => { total++; if(state.done[key(i, s)]) done++; });
+  });
+  document.getElementById("count").textContent = done + "/" + total + " serie";
+  document.getElementById("barfill").style.width = total ? (done / total * 100) + "%" : "0%";
+}
+
+const weeksEl = document.getElementById("weeks");
+for(let w = 1; w <= 8; w++){
+  const b = document.createElement("button");
+  b.type = "button";
+  b.textContent = w;
+  b.setAttribute("aria-pressed", String(w === week));
+  b.setAttribute("aria-label", "Settimana " + w);
+  b.addEventListener("click", () => {
+    week = w;
+    [...weeksEl.children].forEach((c, i) => c.setAttribute("aria-pressed", String(i + 1 === w)));
+    saveView();
+    render();
+    window.scrollTo({ top:0, behavior:"smooth" });
+  });
+  weeksEl.appendChild(b);
+}
+
+document.getElementById("segment").addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if(!b) return;
+  scheda = b.dataset.s;
+  [...e.currentTarget.children].forEach(c => c.setAttribute("aria-pressed", String(c === b)));
+  saveView();
+  render();
+  window.scrollTo({ top:0, behavior:"smooth" });
+});
+
+document.getElementById("reset").addEventListener("click", () => {
+  if(!confirm("Azzero le spunte di Scheda " + scheda + " – settimana " + week + "? I carichi restano salvati.")) return;
+  Object.keys(state.done).forEach(k => {
+    if(k.indexOf(scheda + "|") === 0 && k.indexOf("|w" + week + "|") > -1) delete state.done[k];
+  });
+  save();
+  render();
+});
+
+document.getElementById("export").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify({ app:"scheda-danila", v:1, data:state }, null, 2)], { type:"application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = "scheda-backup-" + new Date().toISOString().slice(0, 10) + ".json";
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+});
+
+document.getElementById("importfile").addEventListener("change", e => {
+  const f = e.target.files && e.target.files[0];
+  if(!f) return;
+  const rd = new FileReader();
+  rd.onload = () => {
+    try{
+      const j = JSON.parse(rd.result);
+      const d = j.data || j;
+      if(!d || (!d.kg && !d.done)) throw new Error("bad");
+      if(!confirm("Sostituisco i dati attuali con quelli del backup?")) return;
+      state = { kg:d.kg || {}, done:d.done || {} };
+      save();
+      render();
+      toast("ripristinato");
+    }catch(err){ alert("Questo file non è un backup della scheda."); }
+  };
+  rd.readAsText(f);
+  e.target.value = "";
+});
+
+let deferredPrompt = null;
+const installBtn = document.getElementById("install");
+window.addEventListener("beforeinstallprompt", e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.hidden = false;
+});
+installBtn.addEventListener("click", async () => {
+  if(!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  installBtn.hidden = true;
+});
+
+document.getElementById("legend").textContent =
+  Object.keys(DIST).map(k => k + " = " + DIST[k]).join("  ·  ") + "   ·   SOM = tempo di esecuzione";
+
+load();
+render();
+
+if("serviceWorker" in navigator){
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
