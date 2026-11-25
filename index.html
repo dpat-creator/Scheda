@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Scheda Danila</title>
-<meta name="description" content="Scheda di allenamento A/B, settembre 2026 — otto settimane, spunta serie e registro carichi.">
+<meta name="description" content="Scheda di allenamento A/B, dicembre 2026 — otto settimane, spunta serie e registro carichi.">
 <link rel="manifest" href="./manifest.webmanifest">
 <meta name="theme-color" content="#F1F3F5" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0E1015" media="(prefers-color-scheme: dark)">
@@ -261,12 +261,11 @@ body{
   <div class="top">
     <div class="brand">
       <h1>Scheda Danila</h1>
-      <div class="sub">Settembre 2026</div>
+      <div class="sub">Dicembre 2026</div>
     </div>
     <div class="segment" id="segment" role="group" aria-label="Scheda">
       <button type="button" data-s="A" aria-pressed="true"><b>Scheda A</b><span>Gambe</span></button>
-      <button type="button" data-s="B" aria-pressed="false"><b>Scheda B</b><span>Corpo libero</span></button>
-      <button type="button" data-s="C" aria-pressed="false"><b>Scheda C</b><span>Dorso e spalle</span></button>
+      <button type="button" data-s="B" aria-pressed="false"><b>Scheda B</b><span>Dorso e spalle</span></button>
     </div>
     <div class="weeks" id="weeks" role="group" aria-label="Settimana"></div>
   </div>
@@ -303,84 +302,55 @@ body{
 <script>
 const SCHEDE = {
   A: [
-    { n:"Split squat", d:"G", rest:"2′", som:"3;1;1;1",
-      note:"La gamba dietro stabilizza. Fai partire bene la spinta da avampiede e alluce della gamba avanti.",
-      setup:"Peso sbilanciato sulla gamba avanti: carica bene su tutto il piede e quando sali immagina di strizzare il gluteo della gamba anteriore.",
-      w:[ [[3,"10"]], [[3,"8"]], [[3,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ],
-      up:[0,1,1,0,0,0,0,0] },
-    { n:"Hip thrust", d:"G", rest:"1′30″", som:"3;1;1;1",
-      note:"La parte interessante è la contrazione, con un piccolo stop in alto. Prima di partire carica forte con il gluteo.",
+    { n:"Bulgarian split squat", d:"G", rest:"2′/30″", som:"3;1;1;1",
+      note:"Come l'esercizio precedente ma con ROM superiore. Non prendere un rialzo troppo alto (es. step).",
+      w:Array(8).fill([[3,"6"],[1,"10-12"]]) },
+    { n:"Hip thrust B-stance", d:"G", rest:"1′30″/30″", som:"3;1;1;1",
+      note:"La parte interessante è la contrazione, con un piccolo stop in alto. Prima di partire carica forte con il gluteo. Come prima ma una gamba lavora e l'altra aiuta in parte.",
       setup:"Schiena neutra in salita e in discesa, spingi bene sul tallone. Il busto si verticalizza in discesa e torna orizzontale quando sali.",
-      w:[ [[1,"10"],[1,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]], [[1,"10"],[2,"8"],[1,"6"]],
-          [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]], [[1,"10"],[1,"8"],[2,"6"]] ] },
-    { n:"Stacco rumeno", d:"F", rest:"1′30″",
-      note:"Al contrario dell'hip thrust il focus è sulla parte di allungamento: percepisci bene l'allungamento dietro la coscia.",
+      w:[ [[1,"25"],[2,"6"]], [[1,"25"],[2,"6"]], [[1,"25"],[2,"6"]], [[1,"25"],[2,"6"]],
+          [[1,"25"],[3,"6"]], [[1,"25"],[3,"6"]], [[1,"25"],[3,"6"]], [[1,"25"],[3,"6"]] ] },
+    { n:"Stacco rumeno 80-20", d:"F", rest:"1′30″",
+      note:"Come l'esercizio sopra: attenzione al bacino, che tenderà a ruotare. Lavora con due manubri.",
       setup:"Porta il sedere alto e dietro con leggero piegamento sul ginocchio, poi estendi l'anca in risalita.",
-      w:[ [[3,"8"]], [[3,"8"]], [[3,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ],
-      up:[0,0,1,0,0,0,0,0] },
-    { n:"Leg extension", d:"Q", rest:"1′30″", som:"3;1;1;0",
-      note:"Pieno range articolare, focus sull'estensione del ginocchio.",
-      w:[ [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]], [[3,"8-10"]] ] },
+      w:[ [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ] },
+    { n:"GHD", d:"G", rest:"1′30″", som:"3;1;1;0",
+      note:"Piccola contrazione di picco.",
+      setup:"Se serve, zavorra.",
+      w:Array(8).fill([[3,"8-10"]]) },
     { n:"Abductus singola", d:"G", rest:"1′", som:"3;1;1;1",
       note:"Seduta sulla macchina con il corpo ruotato dal lato della gamba che lavora.",
       setup:"L'altro piede appoggia sul rinforzo centrale.",
-      w:[ [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]], [[3,"12-15"]] ] }
+      w:Array(8).fill([[3,"12-15"]]) }
   ],
   B: [
-    { n:"Trazioni alla sbarra supine", d:"D", rest:"2′", som:"3;1;1;1",
-      note:"Pensa sempre ad abbassare le spalle e poi schiacciare i gomiti verso il pavimento.",
-      setup:"Petto alto, non muovere le gambe in salita.",
-      w:[ [[1,"3"],[3,"2"]], [[2,"3"],[3,"2"]], [[3,"3"],[2,"2"]], [[3,"3"],[2,"2"]],
-          [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]] ] },
-    { n:"Pike push up", d:"S", rest:"1′30″", som:"3;1;1;1",
-      note:"Box da 50 cm, cubo yoga messo piatto da toccare con la fronte.",
-      setup:"Immagina sempre di spingere il sedere lontano dal box e il torace verso il box, per essere il più verticale possibile. Ogni rep torna con il torace indietro, in discesa avanza con il corpo.",
-      w:[ [[3,"6"]], [[3,"6"]], [[3,"7"]], [[4,"7"]], [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]] ] },
-    { n:"Trazioni orizzontali gomito alto", d:"D", rest:"1′30″", som:"3;1;2;1",
-      note:"Trazioni agli anelli: immagina sempre di portare gli anelli distanti tra loro, piedi in linea con gli anelli.",
-      setup:"Tira con il gomito che va alto e verso fuori, tenendo sempre spalle basse e collo rilassato.",
-      w:[ [[3,"8"]], [[3,"8"]], [[3,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]], [[4,"8"]] ] },
-    { n:"Dip", d:"P", rest:"1′30″", som:"3;1;1;0",
-      note:"Prima di partire spingi le spalle più in basso possibile, poi piega portando il busto in avanti.",
-      setup:"Scendi bella profonda senza perdere l'assetto scapolare e la linea polso‑gomito.",
-      w:[ [[3,"5"]], [[1,"6"],[3,"5"]], [[2,"6"],[2,"5"]], [[3,"6"],[2,"5"]],
-          [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]], [[4,"6"],[1,"5"]] ] },
-    { n:"Dragon flag con step sotto le scapole", d:"A", rest:"1′30″",
-      note:"One leg: sali, poi porta il ginocchio al petto.",
-      setup:"Scendi il più possibile, immagina sempre di portare giù il piede e non il sedere (anca stesa).",
-      w:[ [[3,"15\""]], [[3,"15\""]], [[3,"15\""]], [[4,"15\""]], [[4,"15\""]], [[4,"15\""]], [[4,"15\""]], [[4,"15\""]] ] },
-    { n:"Mobilità torace / bacino", d:"MO", rest:"1′",
-      note:"Lavora con un cuscino per l'addome sotto la pancia.",
-      setup:"Prima piccola retroversione del bacino, poi cammina con le mani per allungarti, poi prova a portare le braccia verso il soffitto tenendo la posizione.",
-      w:[ [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]], [[3,"30\""]] ] }
-  ],
-  C: [
-    { n:"Trazioni alla sbarra supine", d:"D", rest:"2′", som:"3;1;1;1",
-      note:"Pensa sempre ad abbassare le spalle e poi schiacciare i gomiti verso il pavimento.",
-      setup:"Petto alto, non muovere le gambe in salita.",
-      w:[ [[1,"3"],[3,"2"]], [[2,"3"],[3,"2"]], [[3,"3"],[2,"2"]], [[3,"3"],[2,"2"]],
-          [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]], [[4,"3"],[1,"2"]] ] },
-    { n:"Shoulder press caricamento dischi", d:"S", rest:"1′30″", som:"3;1;1;1",
-      note:"Metti uno step sotto i piedi e un cuscino dietro la schiena.",
-      w:[ [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]], [[4,"6"]] ] },
-    { n:"Lat machine presa neutra intermedia", d:"D", rest:"1′30″", som:"3;1;2;1",
+    { n:"Lat machine doppia maniglia", d:"D", rest:"2′", som:"3;1;1;1",
+      note:"Se non c'è la lat doppia disponibile, lavora sulle altre con cavo singolo.",
+      w:Array(8).fill([[4,"6"]]) },
+    { n:"Spinte manubri panca 75", d:"S", rest:"1′30″", som:"3;1;1;1",
+      note:"Come fatto per il macchinario, ma iniziamo con i manubri. Non inarcare la schiena.",
+      setup:"Controlla bene il movimento: come prima parti sempre con il gomito avanti rispetto alla linea delle spalle e stendi alto e leggermente dietro.",
+      w:Array(8).fill([[4,"6"]]) },
+    { n:"Lat machine presa neutra larga", d:"D", rest:"1′30″", som:"3;1;2;1",
       note:"Immagina sempre di spingere i gomiti verso il basso, non di tirare la sbarra al petto.",
-      setup:"Petto alto e spalla molto bassa.",
-      w:[ [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]] ] },
-    { n:"Rematore manubrio", d:"D", rest:"1′30″", som:"3;1;1;0",
+      setup:"Stai bene sotto il cavo: qui i gomiti vanno molto larghi.",
+      w:Array(8).fill([[3,"8-10"]]) },
+    { n:"Rematore cavo basso", d:"D", rest:"1′30″", som:"3;1;1;0",
+      note:"Posiziona la panca a 75° davanti al cavo, con il cavo all'altezza dell'anca (da seduta). Movimento come il lavoro con manubrio, con leggera flessione laterale in chiusura.",
       setup:"Pensa sempre a portare la mano in tasca, spalla molto bassa e gomito stretto.",
-      w:[ [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]], [[3,"6-8"]] ] },
+      w:Array(8).fill([[3,"6-8"]]) },
     { n:"French press manubri", d:"T", rest:"1′30″", som:"3;1;1;0",
       note:"Panca piana.",
       setup:"Gomiti stretti: porta le mani verso la testa e ristendi senza muovere i gomiti in avanti.",
-      w:[ [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]], [[3,"8"]] ] }
+      w:Array(8).fill([[3,"8"]]) }
   ]
 };
 const DIST = { G:"Glutei", F:"Femorali", Q:"Quadricipiti", D:"Dorso", S:"Spalle", P:"Petto", T:"Tricipiti", A:"Addome", MO:"Mobilità" };
 
 let scheda = "A", week = 1;
 let state = { kg:{}, done:{} };
-const LS = "scheda-danila-2026-09";
+const LS = "scheda-danila-2026-12";
+const PERIOD = "2026-12";
 const VIEW = "scheda-danila-view";
 
 function load(){
@@ -551,7 +521,7 @@ document.getElementById("reset").addEventListener("click", () => {
 });
 
 document.getElementById("export").addEventListener("click", () => {
-  const blob = new Blob([JSON.stringify({ app:"scheda-danila", v:1, data:state }, null, 2)], { type:"application/json" });
+  const blob = new Blob([JSON.stringify({ app:"scheda-danila", v:2, period:PERIOD, data:state }, null, 2)], { type:"application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
   a.download = "scheda-backup-" + new Date().toISOString().slice(0, 10) + ".json";
@@ -568,6 +538,7 @@ document.getElementById("importfile").addEventListener("change", e => {
   rd.onload = () => {
     try{
       const j = JSON.parse(rd.result);
+      if(j.period !== PERIOD){ alert("Questo backup è della scheda precedente: i carichi non corrispondono agli esercizi di dicembre, quindi non lo importo."); return; }
       const d = j.data || j;
       if(!d || (!d.kg && !d.done)) throw new Error("bad");
       if(!confirm("Sostituisco i dati attuali con quelli del backup?")) return;

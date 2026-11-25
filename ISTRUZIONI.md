@@ -1,6 +1,6 @@
 # Scheda Danila — come metterla online e installarla
 
-Sette file, una cartella. Non serve installare niente sul computer.
+Sette file, una cartella (più questo file di istruzioni, che non serve caricare). Non serve installare niente sul computer.
 
 ```
 index.html                 l'app
@@ -59,12 +59,14 @@ I dati vivono nella memoria del browser di quel telefono. Restano lì tra una se
 
 Quindi: ogni tanto tocca **Esporta backup** in fondo alla pagina. Scarica un file `.json` che puoi rimettere dentro con **Ripristina backup**, anche su un telefono diverso.
 
-## Aggiornare la scheda a ottobre
+## Aggiornare la scheda (la prossima volta)
 
 Gli esercizi stanno in fondo a `index.html`, nel blocco `const SCHEDE = {`. Ogni esercizio ha:
 
 - `n` nome, `d` distretto, `rest` recupero, `som` tempo di esecuzione
 - `w` le otto settimane: `[[3,"10"]]` vuol dire 3 serie da 10, `[[1,"10"],[2,"8"]]` vuol dire 1 da 10 più 2 da 8
 - `up` opzionale: `1` nelle settimane in cui il coach ha segnato `+`
+
+Quando cambia la scheda, oltre agli esercizi vanno cambiati: `LS` e `PERIOD` (così i carichi vecchi non si mescolano ai nuovi), la scritta del periodo, e `VERSION` in `sw.js`. Poi ricarichi i file come la prima volta. Prima di aggiornare, esporta un backup della scheda vecchia se vuoi tenerlo.
 
 Se preferisci, mandami la scheda nuova e te la aggiorno io.

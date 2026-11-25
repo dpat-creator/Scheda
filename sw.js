@@ -1,5 +1,5 @@
 /* Service worker — tiene l'app utilizzabile anche senza rete. */
-const VERSION = "scheda-v1";
+const VERSION = "scheda-v2";
 const CORE = [
   "./",
   "./index.html",
